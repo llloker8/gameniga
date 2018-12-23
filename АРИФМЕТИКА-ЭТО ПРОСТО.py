@@ -13,7 +13,7 @@ class Math(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('main.ui',self)
-        self.Easy.clicked.connect(self.easyRun)
+        self.Easy.clicked.connect(self.easyRun) 
         self.Normal.clicked.connect(self.normalRun)
         self.Hard.clicked.connect(self.hardRun)
         self.KLIK.clicked.connect(self.relax)
@@ -22,7 +22,7 @@ class Math(QMainWindow):
         self.colorHard.clicked.connect(self.Color_3)
         self.kak.clicked.connect(self.INFO)
         self.kak1.clicked.connect(self.INFO1)
-        self.point = 0
+        self.point = 0 #правельные ответы
         self.points = QLCDNumber(self)
         self.points.move(0, 500)
         self.LCD_count = QLCDNumber(self)
@@ -37,14 +37,14 @@ class Math(QMainWindow):
         self.E = 0
         self.N = 0
         self.H = 0
-        self.sumPoint = 0
+        self.sumPoint = 0 # общее кол. правильных и неправельных ответов
         
         self.statusBar()
         
-        self.name_input.setFont(QtGui.QFont('Cambria Math', 40))
+        self.name_input.setFont(QtGui.QFont('Cambria Math', 40)) #размер и шрифт
         
         self.otvet.clicked.connect(self.Otvet)
-        self.badPoint = 0
+        self.badPoint = 0  # неправельные ответы
         self.badPoints = QLCDNumber(self)
         self.badPoints.move(0,590)
         QToolTip.setFont(QFont('Cambria Math', 10))
@@ -52,6 +52,7 @@ class Math(QMainWindow):
         self.Normal.setToolTip('Уже поинтереснее. Этот режим отлично подойдёт для <b>5-8 классов</b>')
         self.Hard.setToolTip('Давольно сложный уровень. Сделан для <b>9-11 классов</b>. Настоятельно рекомендую перед ним пройти другие уровни сложности ')
     
+    ##Всплывающее окно при попытке закрыть программу
     def closeEvent(self, event):
         reply = QMessageBox.question(self, 'Сообщение', "Вы точно хотите выйти?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if reply == QMessageBox.Yes:
@@ -63,7 +64,7 @@ class Math(QMainWindow):
         else:
             event.ignore()  
      
-    
+    ##Лёгкий уровень
     def easyRun(self):
         self.H = 0
         self.N = 0
@@ -81,7 +82,8 @@ class Math(QMainWindow):
         
         sender = self.sender()
         self.statusBar().showMessage(sender.text() + ' уровень')
-       
+        
+    ##Средний уровень   
     def normalRun(self):
         self.E = 0
         self.H = 0
@@ -100,7 +102,7 @@ class Math(QMainWindow):
         sender = self.sender()
         self.statusBar().showMessage(sender.text() + ' уровень')
         
-        
+    ##Сложный уровень    
     def hardRun(self):
         self.E = 0
         self.N = 0
@@ -119,32 +121,32 @@ class Math(QMainWindow):
         sender = self.sender()
         self.statusBar().showMessage(sender.text() + ' уровень')
         
-        
+    ## выбор цвета для лёгкого    
     def Color_1(self):
         colorEasy = QColorDialog.getColor()
         if colorEasy.isValid():
             self.Easy.setStyleSheet(
                 "background-color: {}".format(colorEasy.name())
             )
-            
+    ##среднего       
     def Color_2(self):
         colorNormal = QColorDialog.getColor()
         if colorNormal.isValid():
             self.Normal.setStyleSheet(
                 "background-color: {}".format(colorNormal.name())
             )
-        
+    ##сложного    
     def Color_3(self):
         colorHard = QColorDialog.getColor()
         if colorHard.isValid():
             self.Hard.setStyleSheet(
                 "background-color: {}".format(colorHard.name())
             )
-            
+    ## отдых(правый верхний угол)        
     def relax(self):
         self.count += 1
         self.LCD_count.display(self.count)
-        
+    ##Вопросительный знак для среднего    
     def INFO(self):
         self.kak = QMessageBox()
         self.kak.about(self, 'Быстрый способ умножения двузначных чисел', 'пример:'\
@@ -156,7 +158,7 @@ class Math(QMainWindow):
 '(5*12)=60'\
 'итого 95*88=8360'\
 'При минимальной тренировке вы научитесь быстро считать.Актуальны числа близкие к ста.')
-        
+     ##для сложного   
     def INFO1(self):
         self.kak1 = QMessageBox()
         self.kak1.about(self, 'способ умножения трёхзначных чисел', '986 · 997 = (986 - 3) · 1000 + 3 · 14 = 983 000 + 42 = 983 042'\
@@ -164,6 +166,7 @@ class Math(QMainWindow):
 '(14) и недостаток до тысячи второго числа (3), затем умножили на 1000,'\
 'а после прибавли произведение недостатков (14 · 3). Все просто.'\
 'Вместо тысячи может быть 100, 200 итд - принцип один и тот же.')
+    ##кнопка 'ответить'
     def Otvet(self):
         name = self.name_input.text()
         if self.E >= 1:
